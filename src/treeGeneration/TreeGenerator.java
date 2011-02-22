@@ -11,6 +11,7 @@ public class TreeGenerator {
 	double density;
 	byte[][] blockArray;
 	byte[][] heightArray;
+	byte[][][] dataArray;
 	Boolean[][] plantedTrees;
 	MapChunk[][] mapChunkIds;
 	Coordinates[][] saveCoordIds;
@@ -157,9 +158,9 @@ public class TreeGenerator {
 	private Tree getTreeFromId(int id, Coordinates c){
 		switch(id){
 		case Tree.PINE_TREE:
-			return new PineTree(c, this.heightArray, this.blockArray, this.plantedTrees);
+			return new PineTree(c, this.heightArray, this.blockArray, this.plantedTrees, this.dataArray);
 		default: 
-			return new PineTree(c, this.heightArray, this.blockArray, this.plantedTrees);
+			return new PineTree(c, this.heightArray, this.blockArray, this.plantedTrees, this.dataArray);
 		}
 	}
 	
@@ -265,6 +266,7 @@ public class TreeGenerator {
 		}
 		this.blockArray = new byte[(zLarge - zSmall + 1) * 16][(xLarge - xSmall + 1) * 16];
 		this.heightArray = new byte[(zLarge - zSmall + 1) * 16][(xLarge - xSmall + 1) * 16];
+		this.dataArray = new byte[(zLarge - zSmall + 1) * 16][(xLarge - xSmall + 1) * 16][128];
 		this.plantedTrees = new Boolean[(zLarge - zSmall + 1) * 16][(xLarge - xSmall + 1) * 16];
 		this.saveCoordIds = new Coordinates[(zLarge - zSmall + 1) * 16][(xLarge - xSmall + 1) * 16];
 		this.mapChunkIds = new MapChunk[(zLarge - zSmall + 1)][(xLarge - xSmall + 1)];
@@ -276,6 +278,7 @@ public class TreeGenerator {
 					for(int localX = 0; localX < 16; localX++){
 						this.blockArray[z * 16 + localZ][x * 16 + localX] = -1;
 						this.heightArray[z * 16 + localZ][x * 16 + localX] = -1;
+						this.dataArray[z * 16 + localZ][x * 16 + localX][128] = 0;
 						this.saveCoordIds[z * 16 + localZ][x * 16 + localX] = null;
 						this.plantedTrees[z * 16 + localZ][x * 16 + localX] = true;
 					}

@@ -20,6 +20,7 @@ public class MapChunk {
 	private byte[][] heightMap = new byte[16][16];
 	private byte[][] topBlocks = new byte[16][16];
 	private byte[][] heightMapTopo = new byte[16][16];
+	ByteArrayTag data;
 	private int xPos;
 	private int zPos;
 	private String filePath;
@@ -47,7 +48,8 @@ public class MapChunk {
 		ByteArrayTag tempLevelHeightMap = (ByteArrayTag)levelTag.getValue().get("HeightMap");
 		ByteArrayTag tempLevelBlocks = (ByteArrayTag)levelTag.getValue().get("Blocks");
 		this.xPos = tempLevelxPos.getValue();
-		this.zPos = tempLevelzPos.getValue();			
+		this.zPos = tempLevelzPos.getValue();
+		this.data = (ByteArrayTag) levelTag.getValue().get("Data");
 
 		//Create heightMap, heightMapTopo, and topBlock arrays.
 		for(int z=0; z<16; z++){
@@ -58,7 +60,7 @@ public class MapChunk {
 					this.heightMap[z][x] = (byte) 127;
 					this.heightMapTopo[z][x] = (byte) 127;
 					this.topBlocks[z][x] = tempLevelBlocks.getValue()[z * 128 + x * 2048 + 127];
-				}
+									}
 				else{
 					this.heightMap[z][x] = (byte)currentHeight;
 					this.heightMapTopo[z][x] = (byte)currentHeight;
