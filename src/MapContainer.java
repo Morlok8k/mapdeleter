@@ -648,7 +648,7 @@ public class MapContainer {
 	 * @param z Z-Position of the MapChunk
 	 * @param x X-Position of the MapChunk
 	 * @param coord The coordinates of the blocks to start filling at.
-	 * @return A LinkedList of the blocks taht were filled at the edge of the chunk.
+	 * @return A LinkedList of the blocks that were filled at the edge of the chunk.
 	 */
 	public LinkedList<Coordinates> fillMapChunkSelected(int z, int x, LinkedList<Coordinates> coord){
 			return this.mapChunkSelected[z][x].fillBlocks(coord);
