@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -115,7 +116,7 @@ public class MapDeleter extends JFrame implements ActionListener{
 		mapMenu.addSeparator();
 		mapMenu.add(mapMenuTerraformSelected);
 		mainMenuBar.add(mapMenu);
-		
+
 		//adding actionListeners to the mapMenu
 		mapMenuCopySelection.addActionListener(this.mapEdit);
 		mapMenuPasteSelection.addActionListener(this.mapEdit);
@@ -159,6 +160,20 @@ public class MapDeleter extends JFrame implements ActionListener{
 		viewMenu.addActionListener(this.mapEdit);
 		fileMenu.addActionListener(this.mapEdit);
 		mapMenu.addActionListener(this.mapEdit);
+
+
+		//Advanced Menu
+		JMenu advancedMenu = new JMenu("Advanced");
+		JCheckBoxMenuItem advancedMenuSetTerrianPopulated = new JCheckBoxMenuItem("Set Terrian Populated = 0");
+		advancedMenuSetTerrianPopulated.setSelected(false);
+		advancedMenu.add(advancedMenuSetTerrianPopulated);
+
+		mainMenuBar.add(advancedMenu);
+
+		//Set up Action Listeners
+		advancedMenuSetTerrianPopulated.addActionListener(this.mapEdit);
+
+
 
 		this.setJMenuBar(mainMenuBar);
        
