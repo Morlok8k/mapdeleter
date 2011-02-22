@@ -20,6 +20,7 @@ public class MapChunkExtended {
 	LongTag lastUpdate;
 	int zPos;
 	ByteTag terrainPopulated;
+	byte terrianP = 0;
 	ListTag tileEntities;
 	byte[] heightMap;
 	ByteArrayTag blockLight;
@@ -76,7 +77,13 @@ public class MapChunkExtended {
 		levelMap.put("xPos", new IntTag("xPos", this.xPos));
 		levelMap.put("LastUpdate", this.lastUpdate);
 		levelMap.put("zPos", new IntTag("zPos", this.zPos));
+		
+		if(MapEditor.setTerrainPopulated == 1){
+		levelMap.put("TerrainPopulated", new ByteTag("TerrainPopulated", terrianP) );
+		} else {
 		levelMap.put("TerrainPopulated", this.terrainPopulated);
+		}
+		
 		levelMap.put("TileEntities", this.tileEntities);
 		levelMap.put("HeightMap", new ByteArrayTag("HeightMap", this.heightMap));
 		levelMap.put("BlockLight", this.blockLight);

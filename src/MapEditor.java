@@ -43,7 +43,7 @@ public class MapEditor extends JLabel implements Scrollable, ActionListener, Mou
     public static final int COLORED_VIEW = 10;
     public static final int TOPOGRAPHIC = 11;
     public static final int TOPOGRAPHIC_LINE_DISTANCE = 10;
-
+    public static int setTerrainPopulated = 0;
 
     /**
      * Make the map editor with the image of the map. 
@@ -273,6 +273,16 @@ public class MapEditor extends JLabel implements Scrollable, ActionListener, Mou
 		if(e.getActionCommand().compareTo("Generate Trees") == 0){
 			this.treeDialog = new TreeGeneratorDialog(this.parent);
 			this.treeDialog.setVisible(true);
+			return;
+		}
+		
+		// Advanced Menu
+		if(e.getActionCommand().compareTo("Set Terrian Populated = 0") == 0){
+			System.out.println("Setting TerrainPopulated = 0");
+			setTerrainPopulated = 1;  // 1 = true, i have to use int instead of a boolean due to preexisting code.
+			return;
+		} else {
+			setTerrainPopulated = 0;  // 0 = false
 			return;
 		}
 		
