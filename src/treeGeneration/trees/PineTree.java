@@ -16,11 +16,13 @@ public class PineTree implements Tree {
 	private Boolean[][] plantedTrees;
 	private byte[][] topBlockArray;
 	private byte[][] heightMapArray;
+	private byte[][][] dataArray;
 	private byte[][][] writeBlocks;
 	
 	//Pine Tree specific variables
 	//Note height is the trunk height, not to the top of the crown
 	Map<Integer, Integer[]> diameterHeightMap = new HashMap<Integer, Integer[]>();
+
 	
 	
 	private static final boolean F = false;
@@ -130,16 +132,19 @@ public class PineTree implements Tree {
 	 * Must take Coordinates of where the tree should be planted.
 	 * The height array of where the tree will be planted
 	 * and an array of where other trees are planted.
+	 * Also, the block data.
 	 * @param c
 	 * @param heightArray
 	 * @param blockArray
 	 * @param plantedTrees
+	 * @param blockDataArray
 	 */
-	public PineTree(Coordinates c, byte[][] heightArray, byte[][] blockArray, Boolean[][] plantedTrees){
+	public PineTree(Coordinates c, byte[][] heightArray, byte[][] blockArray, Boolean[][] plantedTrees, byte[][][] blockDataArray) {
 		this.coord = c;
 		this.plantedTrees = plantedTrees;
 		this.topBlockArray = blockArray;
 		this.heightMapArray = heightArray;
+		this.dataArray = blockDataArray;
 		Integer[] diameterHeight_1 = new Integer[4];
 		diameterHeight_1[0] = 20;
 		diameterHeight_1[1] = 21;
@@ -178,6 +183,7 @@ public class PineTree implements Tree {
 		createRewriteBlockArray();
 	}
 
+
 	@Override
 	public byte[][] getTopBlockArray(){
 		return this.topBlockArray;
@@ -194,9 +200,11 @@ public class PineTree implements Tree {
 	private void createRewriteBlockArray(){
 		if(this.trunkDiameter == 1){
 			this.writeBlocks = new byte[5][5][this.treeHeight + 2];
+			this.dataArray = new byte[5][5][this.treeHeight +2];
 		}
 		else{
 			this.writeBlocks = new byte[8][8][this.treeHeight + 5];
+			this.dataArray = new byte[8][8][this.treeHeight +5];
 		}
 	}
 	
@@ -230,7 +238,7 @@ public class PineTree implements Tree {
 
 	@Override
 	public void generateTree() {
-		for(int y = 0; y < this.treeHeight; y++){
+		for(int y = -2; y < this.treeHeight; y++){     //set y to start at -2, so we get 2 blocks underground - or fix the error on most slopes when the trunkDiameter is 2!
 			this.generateTrunk(y);
 		}
 		if(this.trunkDiameter == 1){
@@ -254,13 +262,18 @@ public class PineTree implements Tree {
 		if(this.trunkDiameter == 1){
 			if(y < this.treeHeight - 2)
 				this.writeBlocks[2][2][y] = Blocks.TREE_TRUNK;
+				this.dataArray[2][2][y] = TreeData.PINE_TREE;  //pine tree texture!
 		}
 		if(this.trunkDiameter == 2){
 			if(y < this.treeHeight - 3){
 			this.writeBlocks[3][3][y] = Blocks.TREE_TRUNK;
 			this.writeBlocks[3][4][y] = Blocks.TREE_TRUNK;
 			this.writeBlocks[4][3][y] = Blocks.TREE_TRUNK;
-			this.writeBlocks[4][4][y] = Blocks.TREE_TRUNK;}
+			this.writeBlocks[4][4][y] = Blocks.TREE_TRUNK;
+			this.dataArray[3][3][y] = TreeData.PINE_TREE;
+			this.dataArray[3][4][y] = TreeData.PINE_TREE;
+			this.dataArray[4][3][y] = TreeData.PINE_TREE;
+			this.dataArray[4][4][y] = TreeData.PINE_TREE;}
 		}
 	}
 	
@@ -334,7 +347,8 @@ public class PineTree implements Tree {
 		for(int z = 0; z < array.length; z++){
 			for(int x = 0; x < array[0].length; x++){
 				if(array[z][x]){
-					this.writeBlocks[z][x][currY] = Blocks.LEAVES;	
+					this.writeBlocks[z][x][currY] = Blocks.LEAVES;
+					this.dataArray[z][x][currY] = TreeData.PINE_TREE;
 				}
 			}
 		}
